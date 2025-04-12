@@ -1,0 +1,54 @@
+<p>credit-card-form works!</p>
+
+<div class="container" style="background-position: center;">    
+    <div class="row">
+        <div class="col">
+            <label for="name">Person Name : </label>
+        </div>
+        <div class="col">
+            <input id="name" type="text" [formControl]="name">
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col">
+            <label for="number">Credit Card Number : </label>
+        </div>
+        <div class="col">
+            <input id="number" type="text" [formControl]="number">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="number">Expiry Month : </label>
+        </div>
+        <div class="col">
+            <input id="month" type="text" [formControl]="month">
+        </div>
+        <div class="col">
+            <label for="year">Expiry Year : </label>
+        </div>
+        <div class="col">
+            <input id="year" type="text" [formControl]="year">
+        </div>
+        <div class="col">
+            <label for="cvv">CVV : </label>
+        </div>
+        <div class="col">
+            <input id="cvv" type="text" [formControl]="cvv">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <label for="number">Zipcode : </label>
+        </div>
+        <div class="col">
+            <input id="zipcode" type="text" [formControl]="zipcode">
+        </div>
+    </div>
+</div>
+
+<div>Value : {{ name.value }}</div>
+
