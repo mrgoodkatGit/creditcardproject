@@ -1,99 +1,89 @@
 
-<div style="position: relative; display: flex; justify-content: center; align-items: center; width: 100%; max-width: 400px;">
-    <img src="amxCC.jpg" style="width: 100%; height: auto;">
-    <div style="position: absolute; color: white; font-size: 24px; font-weight: bold; text-align: center;">
-        Overlay Text
-    </div>
-</div>
-
-<div style="display: grid; position: relative; width: 100%; max-width: 400px;">
-    <img src="amxCC.jpg" style="grid-area: 1/1; width: 100%; height: auto;">
-    <div style="grid-area: 1/1; place-self: center ; color: white; font-size: 24px; font-weight: bold; text-align: center;">
-      Overlay Text
-    </div>
-</div>
-
-<div class="bg-image" style="background-image: url('/amxCC.jpg'); height: 350px; background-repeat: no-repeat; background-position: center;">
-    <div class="row h-25"></div>
-    <div class="row h-25"></div>
-    <div class="row h-25">
-        <div class = "col text-center">55258424545454564132545</div>
-    </div>
-    <div class="row h-25">
-        <div class = "col text-center"> MR X</div>
-    </div>
-</div>
-
-
-<div class="container" style="background-image: url('/amxCC.jpg'); height: 350px; background-repeat: no-repeat; background-position: center;">    
+<br />
+<br />
+<div class="container" style="background-image: url('/{{getCreditCardImage()}}'); height: 350px; width: 550px; background-repeat: no-repeat; background-position: center;">    
     <div class="row">
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
     </div>        
     </div>
     <div class="row">
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
     </div>        
     </div>
     <div class="row">
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
     </div>        
     </div>
     <div class="row">
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
     </div>        
     </div>
     <div class="row">
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
     </div>        
     </div>
     <div class="row">
-        <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
+        <div class="col-1">
+            <div style="color: white; font-size: 20px; font-weight: bold; text-align: left;"></div>                    
         </div>        
+        <div class="col-6">
+            <div style="color: white; font-size: 20px; font-weight: bold; text-align: left;">
+                {{creditCardData.name}}
+            </div>                    
+        </div>        
+        <div class="col-5">
+            <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>                    
         </div>        
     </div>
     <div class="row">       
         <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>        
+        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>        
         </div>        
     </div>        
     <div class="row">
-        <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"> MR X</div>
+        <div class="col-1">
+            <div style="color: white; font-size: 20px; font-weight: bold; text-align: left;"></div>                    
+        </div>        
+        <div class="col-8">
+            <div style="color: white; font-size: 16px; font-weight: bold; text-align: left;">
+                {{creditCardData.number}}
+            </div>
+        </div>
+        <div class="col-3">
+            <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>
         </div>
     </div>        
     <div class="row">
-        <div class="col-12">
-        <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;">
-            CreditCard User
-        </div>    
+        <div class="col-1">
+            <div style="color: white; font-size: 20px; font-weight: bold; text-align: left;"></div>                    
+        </div>        
+        <div class="col-2">
+            <div style="color: white; font-size: 12px; font-weight: bold; text-align: left;">
+                {{creditCardData.month}}\{{creditCardData.year}}
+            </div>    
+        </div>            
+        <div class="col-2">
+            <div style="color: white; font-size: 10px; font-weight: bold; text-align: left;">
+                {{creditCardData.cvv}}
+            </div>    
+        </div>            
+        <div class="col-7">
+            <div style="color: white; font-size: 24px; font-weight: bold; text-align: center;"><br /></div>    
         </div>            
     </div>
 </div>
 
 <div class="container">
-    <app-credit-card-form></app-credit-card-form>
+    <app-credit-card-form (formDataEvent) = "getCreditCardData($event)"></app-credit-card-form>
 </div>
 
-<div class="text-center">ABC</div>
+<br />
+
 <div class="text-center">
     <p><b>Reactive Form below Credit Card Image for </b></p>
     <p><b>UserName, CreditCard Number, Active Date, Code </b></p>
@@ -101,9 +91,17 @@
     <p><b>While user types these info, it should reflect on the image itself </b></p>
     <p><b>Submit button down below </b></p>
     <p><b>Should call DB service to save info and service should call DB Api to send to DB </b></p>
+    <p><b>Search should call DB Api to fetch info from DB </b></p>
+    <p><b>Understand Subject, Subscribe, Pipe </b></p>
     <p><b>Unit tests for the service, class and component </b></p>
+    <p><b>Deploy the app in local machine </b></p>
+    <p><b>Deploy the web api in local machine </b></p>
+    <p><b>Deploy the app in Azure </b></p>
+    <p><b>Deploy the web api in azure </b></p>
 </div>
 <div class="text-center"><b><i>Design web api to save info in DB and be able to call from Angular</i></b></div>
+
+<div class="text-center"><b><i>{{creditCardData.name}}</i></b></div>
 
 <div *ngFor="let cc of creditCardTypes">
     <div id = {{cc.id}}>
