@@ -93,6 +93,7 @@
     <p><b>Should call DB service to save info and service should call DB Api to send to DB </b></p>
     <p><b>Search should call DB Api to fetch info from DB </b></p>
     <p><b>Understand Subject, Subscribe, Pipe </b></p>
+    <p><b>Create custom Pipe </b></p>
     <p><b>Unit tests for the service, class and component </b></p>
     <p><b>Deploy the app in local machine </b></p>
     <p><b>Deploy the web api in local machine </b></p>
@@ -108,6 +109,17 @@
         <li>{{cc.id}}</li>
         <li>{{cc.name}}</li>
         <li>{{cc.bin}}</li>
+    </div>
+</div>
+
+<div *ngFor="let u of userCreditCardData">
+    <div id = {{u.name}}>
+        <li>UserName : {{u.name}}</li>
+        <li>CreditCard Number :  {{u.number}}</li>
+        <li>ZipCode : {{u.zipcode}}</li>
+        <li>CVV : {{u.cvv}}</li>
+        <li>Month : {{u.month}}</li>
+        <li>Year : {{u.year}}</li>
     </div>
 </div>
 

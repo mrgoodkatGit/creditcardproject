@@ -17,20 +17,12 @@ export class CreditcarduserService {
   constructor(private http: HttpClient) 
   { }
 
-  getCreditCardUser(userName : string) : Observable<CreditCardDto>{
-    console.log("get method");
+  getCreditCardUser(userName : string) : Observable<any[]>{    
 
-    let headers = new HttpHeaders({'username': userName});    
-    //headers.set('accept', 'application/json');
-    //headers.set('username:', userName);
+    let headers = new HttpHeaders({'username': userName});        
+    let res = this.http.get<any[]>(this.url + "get", {headers: headers});    
     
-    let params = new HttpParams();
-    params.set('username:', userName);
-
-    //return this.http.get<any>(this.url + "?username=" + userName);
-    //return this.http.get<any>(this.url + "get", {headers, params});
-    return this.http.get<CreditCardDto>(this.url + "get", {headers: headers});
-    //.pipe(            catchError(this.handleError<CreditCardDto>('getCreditCardUser', new CreditCardDto()))        );    
+    return res;
   }
 
   saveCreditCardUser(user : CreditCardDto){

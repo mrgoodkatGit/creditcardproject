@@ -19,6 +19,8 @@ export class DisplayCCComponent implements OnInit {
 
     creditCardData = new CreditCardDto();
 
+    userCreditCardData : CreditCardDto[] = [];
+
     constructor(){
       this.creditCardService = inject(CreditcardTypesService);
     }
@@ -27,14 +29,17 @@ export class DisplayCCComponent implements OnInit {
       this.creditCardTypes = this.creditCardService.getAllCreditCardTypes();
     }
 
-    getCreditCardData(data : any){      
-      this.creditCardData = data as CreditCardDto;
-      console.warn("output data :" + this.creditCardData.name);
+    getCreditCardData(data : any[]){     
+      this.userCreditCardData = data;
+      console.log("Emitted array : " + data.length); 
+      console.log("Array length : " + this.userCreditCardData.length); 
+      this.creditCardData = data[0] as CreditCardDto;      
     }
 
     public getCreditCardImage() : string {
 
       let startingNumber : string = "";
+      //console.log("Number : " + this.creditCardData.number);
       startingNumber = this.creditCardData.number.substring(0, 1);
 
       switch (startingNumber)

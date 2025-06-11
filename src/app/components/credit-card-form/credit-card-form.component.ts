@@ -8,6 +8,8 @@ import { CreditCardExpiryYearValidator } from './creditCardExpiryYearValidator';
 import { NumberValidator } from './numberValidator';
 import { CreditcarduserService } from '../../services/creditcarduser.service';
 import { error } from 'node:console';
+import { forkJoin, map, mergeMap, Subject, takeUntil } from 'rxjs';
+import { response } from 'express';
 
 @Component({
   selector: 'app-credit-card-form',
@@ -18,7 +20,7 @@ import { error } from 'node:console';
 
 export class CreditCardFormComponent {
 
-@Output() formDataEvent = new EventEmitter<any>();
+@Output() formDataEvent = new EventEmitter<any[]>();
 
 creditCardUserService : CreditcarduserService;
 
@@ -33,7 +35,9 @@ creditCardUserService : CreditcarduserService;
     }
   );
 
-  creditCardInfo  = new CreditCardDto();
+  creditCardInfo = new CreditCardDto();
+
+  userCrditCardinfo : CreditCardDto[] = [];
 
   constructor()
   {
@@ -83,16 +87,65 @@ creditCardUserService : CreditcarduserService;
           break;
         }
       }
-      this.formDataEvent.emit(this.creditCardInfo);  
+      //this.userCrditCardinfo.push(this.creditCardInfo);
+      this.formDataEvent.emit(this.userCrditCardinfo);  
     }
   }
   
   searchUser(query : string) : void {
-    var res = this.creditCardUserService.getCreditCardUser(query).subscribe(
-      (response) => { console.log("sucess : " + res);},
-      (error) => { console.log("error : " + error);}
-    );
-    console.log(res);
+    var fetched : CreditCardDto[] = [];
+    
+    var res = this.creditCardUserService.getCreditCardUser(query)
+    .subscribe({
+      next: (r) => {
+        r.forEach((i) => {
+            console.log("Response : " + JSON.stringify(i));
+            var temp = JSON.parse(JSON.stringify(i));            
+
+            let dto : CreditCardDto = new CreditCardDto();
+            dto.name = temp.UserName;
+            dto.number = temp.CreditCardNumber;
+            dto.cvv = temp.CVV;
+            dto.zipcode = temp.ZipCode;
+            dto.month = temp.ExpiryMonth;
+            dto.year = temp.ExpiryYear;
+
+            /*
+            for(let key in i)
+            {
+              let value = i[key];
+              if (key == "userName")
+                dto.name = value;
+              else if (key == "creditCardNumber")
+                dto.number = value;
+              else if (key == "zipCode")
+                dto.zipcode = value;
+              else if (key == "cvv")
+                dto.cvv = value;
+              else if (key == "expiryYear")
+                dto.year = value;
+              else if (key == "expiryMonth")
+                dto.month = value;
+            }*/
+            fetched.push(dto);
+
+        });
+      },
+      error: error => console.log("error : " + error),
+      complete: () => {        
+        this.creditCardForm.controls['name'].setValue(fetched[0].name);    
+        this.creditCardForm.controls['number'].setValue(fetched[0].number);    
+        this.creditCardForm.controls['month'].setValue(fetched[0].month);    
+        this.creditCardForm.controls['year'].setValue(fetched[0].year);    
+        this.creditCardForm.controls['cvv'].setValue(fetched[0].cvv);    
+        this.creditCardForm.controls['zipcode'].setValue(fetched[0].zipcode);  
+        
+        console.log("Number of records : " + this.userCrditCardinfo.length);
+        this.userCrditCardinfo = fetched;
+        this.formDataEvent.emit(this.userCrditCardinfo);
+      }
+        
+    });     
   }
 
   onSubmit(){
@@ -105,7 +158,7 @@ creditCardUserService : CreditcarduserService;
       zipcode : this.creditCardForm.controls['zipcode'].value
     } as CreditCardDto;
 
-    this.formDataEvent.emit(
+    /*this.formDataEvent.emit(
       {
         name : this.creditCardForm.controls['name'].value,
         number : this.creditCardForm.controls['number'].value,
@@ -114,17 +167,17 @@ creditCardUserService : CreditcarduserService;
         cvv : this.creditCardForm.controls['cvv'].value,
         zipcode : this.creditCardForm.controls['zipcode'].value
       } as CreditCardDto
-    );
+    );*/
+    this.userCrditCardinfo.push(captured);
+    this.formDataEvent.emit(this.userCrditCardinfo);
 
     let res = this.creditCardUserService.saveCreditCardUser(captured).subscribe(
-      (response) => {
-        console.log("Api called : ", response);
-      },
-      (error) => {
-        console.log("Error Occured : ", error);
+      {
+        next: () => { console.log("Task done"); },
+        error: (er) => {console.log("Error Occured : " + er);},
+        complete: () => {res.unsubscribe();}
       }
-    );
+    );   
     
-    console.warn(this.creditCardForm.controls['name'].value);
   }  
 }
