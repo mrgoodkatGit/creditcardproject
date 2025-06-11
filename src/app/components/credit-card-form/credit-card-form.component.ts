@@ -10,6 +10,8 @@ import { CreditcarduserService } from '../../services/creditcarduser.service';
 import { error } from 'node:console';
 import { forkJoin, map, mergeMap, Subject, takeUntil } from 'rxjs';
 import { response } from 'express';
+import { ApiGetDataTransform } from '../apiGetDataTransform.pipe';
+import { Transform } from 'node:stream';
 
 @Component({
   selector: 'app-credit-card-form',
@@ -99,6 +101,10 @@ creditCardUserService : CreditcarduserService;
     .subscribe({
       next: (r) => {
         r.forEach((i) => {
+            const dataTransform = new ApiGetDataTransform();
+            fetched.push(dataTransform.transform(i));
+
+            /*
             console.log("Response : " + JSON.stringify(i));
             var temp = JSON.parse(JSON.stringify(i));            
 
@@ -109,6 +115,7 @@ creditCardUserService : CreditcarduserService;
             dto.zipcode = temp.ZipCode;
             dto.month = temp.ExpiryMonth;
             dto.year = temp.ExpiryYear;
+            */
 
             /*
             for(let key in i)
@@ -127,7 +134,7 @@ creditCardUserService : CreditcarduserService;
               else if (key == "expiryMonth")
                 dto.month = value;
             }*/
-            fetched.push(dto);
+            //fetched.push(dto);
 
         });
       },
